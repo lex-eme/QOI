@@ -10,7 +10,7 @@ bool loadQoiImageFromFile(sf::Image& image, const std::string& path) {
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file: \"" << path << "\"." << std::endl;
-        std::exit(74);
+        return false;
     }
 
     const std::streamsize size = file.tellg();
@@ -19,12 +19,12 @@ bool loadQoiImageFromFile(sf::Image& image, const std::string& path) {
     const auto buffer = std::make_unique<unsigned char[]>(size);
     if (buffer == nullptr) {
         std::cerr << "Failed to allocate buffer." << std::endl;
-        std::exit(74);
+        return false;
     }
 
     if (!file.read(reinterpret_cast<std::istream::char_type *>(buffer.get()), size)) {
         std::cerr << "Failed to read file \"" << path << "\"." << std::endl;
-        std::exit(74);
+        return false;
     }
 
     file.close();
