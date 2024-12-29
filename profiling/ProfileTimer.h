@@ -15,7 +15,6 @@
 
 class ProfileTimer {
     ProfileResult result;
-    std::chrono::time_point<std::chrono::high_resolution_clock> startTimePoint;
 
     void stop();
 
