@@ -15,12 +15,11 @@
 
 class ProfileTimer {
     ProfileResult result;
-    bool stopped = false;
     std::chrono::time_point<std::chrono::high_resolution_clock> startTimePoint;
+
+    void stop();
 
 public:
     explicit ProfileTimer(const std::string& name);
     ~ProfileTimer();
-
-    void stop();
 };
