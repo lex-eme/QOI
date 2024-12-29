@@ -16,8 +16,17 @@ FetchContent_MakeAvailable(SFML)
 add_executable(main src/main.cpp
         src/qoi.cpp
         src/qoi.h)
-target_link_libraries(main PRIVATE sfml-graphics)
+
+add_library(profiling profiling/Profiler.cpp
+        profiling/Profiler.h
+        profiling/ProfileTimer.cpp
+        profiling/ProfileTimer.h)
+
+target_include_directories(main PUBLIC profiling)
+
+target_link_libraries(main PRIVATE sfml-graphics profiling)
 target_compile_features(main PRIVATE cxx_std_23)
+target_compile_features(profiling PRIVATE cxx_std_23)
 
 if(WIN32)
     add_custom_command(
