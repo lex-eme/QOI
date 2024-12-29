@@ -2,6 +2,8 @@
 
 #include <cstring>
 
+#include "ProfileTimer.h"
+
 unsigned int qoi::read32(const unsigned char *data, int *p) {
     const unsigned int a = data[(*p)++];
     const unsigned int b = data[(*p)++];
@@ -11,6 +13,7 @@ unsigned int qoi::read32(const unsigned char *data, int *p) {
 }
 
 qoi::Image qoi::decode(const void *data, const int size, const Mode mode) {
+    PROFILE_FUNCTION();
     rgba cache[64];
     memset(cache, 0, sizeof(cache));
     rgba pixel;
@@ -36,7 +39,7 @@ qoi::Image qoi::decode(const void *data, const int size, const Mode mode) {
 
     image.channels = mode;
 
-    const int pixelsLength = image.width * image.height * image.channels;
+    const unsigned int pixelsLength = image.width * image.height * image.channels;
     auto *pixels = new unsigned char[pixelsLength];
 
     const int chunksLength = size - sizeof(Padding);

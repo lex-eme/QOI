@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "qoi.h"
+#include "ProfileTimer.h"
 
 bool loadQoiImageFromFile(sf::Image& image, const std::string& path) {
     std::ifstream file { path, std::ios::in | std::ios::ate | std::ios::binary };
@@ -46,9 +47,12 @@ int main(int argc, char *argv[])
     std::string path = argv[1];
 
     sf::Image pngImage;
-    if (!pngImage.loadFromFile(path + ".png")) {
-        std::cerr << "Cannot load png image." << std::endl;
-        return 1;
+    {
+        PROFILE_SCOPE("PNG load image");
+        if (!pngImage.loadFromFile(path + ".png")) {
+            std::cerr << "Cannot load png image." << std::endl;
+            return 1;
+        }
     }
     sf::Texture texture;
     texture.loadFromImage(pngImage);
@@ -56,8 +60,11 @@ int main(int argc, char *argv[])
     sprite.setPosition(0.0f, 0.0f);
 
     sf::Image qoiImage;
-    if (!loadQoiImageFromFile(qoiImage, path + ".qoi")) {
-        std::cerr << "Cannot load qoi image." << std::endl;
+    {
+        PROFILE_SCOPE("QOI load image");
+        if (!loadQoiImageFromFile(qoiImage, path + ".qoi")) {
+            std::cerr << "Cannot load qoi image." << std::endl;
+        }
     }
     sf::Texture qoiTexture;
     qoiTexture.loadFromImage(qoiImage);
