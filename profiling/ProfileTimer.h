@@ -1,7 +1,5 @@
 #pragma once
 
-#include <chrono>
-
 #include "Profiler.h"
 
 #define PROFILING 1

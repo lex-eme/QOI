@@ -1,5 +1,7 @@
 #include "Profiler.h"
 
+#include <string>
+
 Profiler::Profiler() {
     fos = std::ofstream(outputFile);
     writeHeader();
